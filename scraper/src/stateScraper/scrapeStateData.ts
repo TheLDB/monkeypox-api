@@ -1,8 +1,13 @@
-import puppeteer from "puppeteer";
+// * Standard Node Modules
 import fs from "fs";
-import { parse } from '@fast-csv/parse';
+
+// * Third Party Libs
+import puppeteer from "puppeteer"; // * Launch (Headless) Chromium browser & download CSV file
+import { parse } from '@fast-csv/parse'; // * Parse CSV file from CDC
+import { PrismaClient } from "@prisma/client"; // * Connect to Supabase and push data to DB
 
 const scrapeStateData = async () => {
+    const prisma = new PrismaClient();
 	console.log("Loading the CDC site via Puppeteer");
 	// * Launch browser and go to page
 	const browser = await puppeteer.launch();
@@ -29,6 +34,7 @@ const scrapeStateData = async () => {
             // * row[1] = State cases
             // * row[2] = State case range
             row[0] === "State" ? '' : console.log(row);
+            // ? Push data to Supabase entries
         })
         .on('end', (rowCount: number) => {
             fs.unlinkSync('./data/2022 U.S. Map & Case Count.csv');
