@@ -36,7 +36,7 @@ As the 2022 Monkeypox outbreak grows and spreads, an easy and open source access
     - Method: ``GET``
     - Route: ``{api-domain-here}/stats/us``
     - Return Type: ``JSON``
-    - Find a list of every state & their code [here](docs/States.md)
+    - Find a list of every state & their code [here](docs/States.md) u
 - Get a list of stats for every county of a state
     - Method: ``GET``
     - Route: ``{api-domain-here}/stats/us/:state/counties``
