@@ -12,37 +12,10 @@ The Monkeypox API is a Fastify/Typescript API used for quick and easy access to 
 ## Why does this API exist?
 As the 2022 Monkeypox outbreak grows and spreads, an easy and open source access to the data surrounding it is super important.
 
-# How to use it
+# Folder Structure
 
-## Routes
+## [api](./api/)
+The api holds the fastify application which allows users to fetch data
 
-### Global Stats
-- Get a list of stats for every country
-    - Method: ``GET``
-    - Route: ``{api-domain-here}/stats/global``
-    - Return Type: ``JSON``
-- Get stats for a specific country
-    - Method: ``GET``
-    - Route: ``{api-domain-here}/stats/:country``
-    - Return Type: ``JSON``
-    - Find a list of every country & their code [here](docs/Countries.md)
-
-### US Stats
-- Get a list of stats for every state
-    - Method: ``GET``
-    - Route: ``{api-domain-here}/stats/us``
-    - Return Type: ``JSON``
-- Get stats for a specific state
-    - Method: ``GET``
-    - Route: ``{api-domain-here}/stats/us``
-    - Return Type: ``JSON``
-    - Find a list of every state & their code [here](docs/States.md) u
-- Get a list of stats for every county of a state
-    - Method: ``GET``
-    - Route: ``{api-domain-here}/stats/us/:state/counties``
-    - Return Type: ``JSON``
-- Get stats for a specific county
-    - Method: ``GET``
-    - Route: ``{api-domain-here}/stats/us/:state/:county``
-    - Return Type: ``JSON``
-    - Find a list of every state & their county [here](docs/States.md)
+## [scraper](/scraper/)
+The scraper is a typescript app which runs on a cron job and scrapes government sites for monkeypox data every 12 hours
