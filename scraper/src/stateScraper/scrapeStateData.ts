@@ -23,16 +23,19 @@ const scrapeStateData = async () => {
     const link = await page.click('[download="2022 U.S. Map & Case Count.csv"]');
     await page.waitForTimeout(2000);
 
-    // * Get file using FS and set data var
+    // * Create a read stream on our new file and use @fast-csv/parse to parse it into usable, readable data
     fs.createReadStream('./data/2022 U.S. Map & Case Count.csv')
         .pipe(parse())
         .on('error', error => console.error(error))
         .on('data', async row => {
-            console.log(row[1])
+            // * row[0] = State name
+            // * row[1] = State cases
+            // * row[2] = State case range
+            row[0] === "State" ? '' : console.log(row);
         })
         .on('end', (rowCount: number) => {
             fs.unlinkSync('./data/2022 U.S. Map & Case Count.csv');
-            console.log(`Deleted the CSV file and parsed ${rowCount} rows`)
+            console.log(`Deleted the CSV file and parsed ${rowCount - 1} rows`)
         });
 
 	await browser.close();
