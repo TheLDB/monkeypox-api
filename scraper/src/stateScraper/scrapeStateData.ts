@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer";
 import fs from "fs";
-import {parse} from '@fast-csv/parse';
+import { parse } from '@fast-csv/parse';
 
 const scrapeStateData = async () => {
 	// Get the newest CSV blob link from the CDC (https://www.cdc.gov/poxvirus/monkeypox/response/2022/us-map.html) using Puppeteer
