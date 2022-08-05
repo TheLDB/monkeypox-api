@@ -42,4 +42,4 @@ const scrapeStateData = async () => {
 	console.log("Grabbed data, closed browser");
 };
 
-export default scrapeStateData;
+export { scrapeStateData };
