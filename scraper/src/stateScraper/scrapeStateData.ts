@@ -1,7 +1,6 @@
 import puppeteer from "puppeteer";
-import http from "http";
 import fs from "fs";
-import axios from "axios";
+import {parse} from '@fast-csv/parse';
 
 const scrapeStateData = async () => {
 	// Get the newest CSV blob link from the CDC (https://www.cdc.gov/poxvirus/monkeypox/response/2022/us-map.html) using Puppeteer
@@ -22,7 +21,19 @@ const scrapeStateData = async () => {
 
     // * Click download button and wait for it to download
     const link = await page.click('[download="2022 U.S. Map & Case Count.csv"]');
-    await page.waitForTimeout(6000);
+    await page.waitForTimeout(2000);
+
+    // * Get file using FS and set data var
+    fs.createReadStream('./data/2022 U.S. Map & Case Count.csv')
+        .pipe(parse())
+        .on('error', error => console.error(error))
+        .on('data', async row => {
+            console.log(row[1])
+        })
+        .on('end', (rowCount: number) => {
+            fs.unlinkSync('./data/2022 U.S. Map & Case Count.csv');
+            console.log(`Deleted the CSV file and parsed ${rowCount} rows`)
+        });
 
 	await browser.close();
 	console.log("Grabbed data, closed browser");
