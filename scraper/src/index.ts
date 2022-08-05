@@ -1,5 +1,3 @@
-const world = "world";
+import scrapeStateData from './scrapeStateData';
 
-export function hello(who: string = world): string {
-	return `Hello ${who}! `;
-}
+scrapeStateData();
