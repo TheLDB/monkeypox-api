@@ -1,4 +1,6 @@
 # Monkeypox Data Scraper
+Written by [Landon Boles/TheLDB](https://github.com/TheLDB)
+
 
 # About
 
