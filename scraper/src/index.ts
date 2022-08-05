@@ -1,3 +1,3 @@
-import scrapeStateData from './scrapeStateData';
+import scrapeStateData from './stateScraper/scrapeStateData';
 
 scrapeStateData();
