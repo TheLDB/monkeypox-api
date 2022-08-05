@@ -3,10 +3,7 @@ import fs from "fs";
 import { parse } from '@fast-csv/parse';
 
 const scrapeStateData = async () => {
-	// Get the newest CSV blob link from the CDC (https://www.cdc.gov/poxvirus/monkeypox/response/2022/us-map.html) using Puppeteer
-	// We're just going to grab the link then use node-fetch to pull it down because downloading files with puppeteer is like hell on earth.
 	console.log("Loading the CDC site via Puppeteer");
-
 	// * Launch browser and go to page
 	const browser = await puppeteer.launch();
 
