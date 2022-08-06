@@ -1,20 +1,31 @@
+
 import { FastifyPluginAsync } from "fastify";
 import { PrismaClient } from "@prisma/client";
+
+interface QueryParams {
+    country: string;
+}
 
 const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
 	const prisma = new PrismaClient();
 
-	fastify.options("/countryData", async function(request, reply) {
+	fastify.options("/:country", async function(request, reply) {
 		reply.code(200)
 		return;
 	});
 	
-	fastify.get("/countryData", async function (request, reply) {
-		const allCountryData = await prisma.countryData.findMany();
-		if(allCountryData.length > 0) {
+	fastify.get<{Params: QueryParams}>("/:country", async function (request, reply) {
+        const { country } = request.params; 
+        const countryData = await prisma.countryData.findUnique({
+            where: {
+                country
+            }
+        });
+
+		if(countryData) {
 			reply.code(200).send({
 				code: 200,
-				data: allCountryData
+				data: countryData
 			});
 			return;
 		}
