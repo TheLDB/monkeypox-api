@@ -3,7 +3,7 @@ Written by [Landon Boles/TheLDB](https://github.com/TheLDB)
 
 
 # About
-## What is this API?
+## What is the API?
 The Monkeypox API is a Fastify/Typescript API used for quick and easy access to worldwide stats of Monkeypox.
 
 ## What is the Scraper?
