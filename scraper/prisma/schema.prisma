@@ -22,3 +22,21 @@ model stateData {
   createdOn DateTime @db.Timestamptz(6)
   updatedOn DateTime @db.Timestamptz(6)
 }
+
+model countryData {
+  country   String   @id @db.VarChar
+  caseCount String   @db.VarChar
+  category  String   @db.VarChar
+  asOf      String   @db.VarChar
+  createdOn DateTime @db.Timestamptz(6)
+  updatedOn DateTime @db.Timestamptz(6)
+}
+
+model historicalCountryData {
+  id        String   @id @db.VarChar
+  country   String   @db.VarChar
+  caseCount String   @db.VarChar
+  category  String   @db.VarChar
+  asOf      String   @db.VarChar
+  createdOn DateTime @db.Timestamptz(6)
+}
