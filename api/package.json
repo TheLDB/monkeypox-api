@@ -20,9 +20,11 @@
   "dependencies": {
     "@fastify/autoload": "^5.0.0",
     "@fastify/sensible": "^4.1.0",
+    "@prisma/client": "^4.1.1",
     "fastify": "^4.0.0",
     "fastify-cli": "^4.3.0",
-    "fastify-plugin": "^3.0.0"
+    "fastify-plugin": "^3.0.0",
+    "prisma": "^4.1.1"
   },
   "devDependencies": {
     "@types/node": "^18.0.0",

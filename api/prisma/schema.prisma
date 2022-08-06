@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model countryData {
+  country   String   @id @db.VarChar
+  caseCount String   @db.VarChar
+  category  String   @db.VarChar
+  asOf      String   @db.VarChar
+  createdOn DateTime @db.Timestamptz(6)
+  updatedOn DateTime @db.Timestamptz(6)
+}
+
+model historicalCountryData {
+  id        String   @id @db.VarChar
+  country   String   @db.VarChar
+  caseCount String   @db.VarChar
+  category  String   @db.VarChar
+  asOf      String   @db.VarChar
+  createdOn DateTime @db.Timestamptz(6)
+}
+
+model historicalStateData {
+  id        String   @id @db.VarChar
+  stateName String   @db.VarChar
+  caseCount String   @db.VarChar
+  caseRange String   @db.VarChar
+  createdOn DateTime @db.Timestamptz(6)
+}
+
+model stateData {
+  state     String   @id @db.VarChar
+  caseCount String   @db.VarChar
+  caseRange String   @db.VarChar
+  createdOn DateTime @db.Timestamptz(6)
+  updatedOn DateTime @db.Timestamptz(6)
+}
