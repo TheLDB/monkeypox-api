@@ -9,12 +9,12 @@ interface QueryParams {
 const prisma = new PrismaClient();
 
 const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
-	fastify.options("/:stateName", async function(request, reply) {
+	fastify.options("/states/:stateName", async function(request, reply) {
 		reply.code(200)
 		return;
 	});
 	
-	fastify.get<{Params: QueryParams}>("/:stateName", async function (request, reply) {
+	fastify.get<{Params: QueryParams}>("/states/:stateName", async function (request, reply) {
         const { stateName } = request.params; 
         const stateData = await prisma.stateData.findUnique({
             where: {

@@ -16,14 +16,14 @@ const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
 	
 	fastify.get<{Querystring: QueryParams}>("/historicalStateData", async function (request, reply) {
         const { page } = request.query; 
-		const historicalStateData = await prisma.historicalStateData.findMany({
+		const historicalCountryData = await prisma.historicalStateData.findMany({
             take: page * 350
         });
 
-		if(historicalStateData.length > 0) {
+		if(historicalCountryData.length > 0) {
 			reply.code(200).send({
 				code: 200,
-				data: historicalStateData
+				data: historicalCountryData
 			});
 			return;
 		}
