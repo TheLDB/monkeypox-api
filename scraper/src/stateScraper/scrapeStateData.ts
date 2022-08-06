@@ -5,6 +5,7 @@ import fs from "fs";
 import puppeteer from "puppeteer"; // * Launch (Headless) Chromium browser & download CSV file
 import { parse } from '@fast-csv/parse'; // * Parse CSV file from CDC
 import { PrismaClient } from "@prisma/client"; // * Connect to Supabase and push data to DB
+import { uuid } from 'uuidv4';
 
 const scrapeStateData = async () => {
     const prisma = new PrismaClient();
@@ -26,6 +27,7 @@ const scrapeStateData = async () => {
     await page.waitForTimeout(2000);
 
     // * Create a read stream on our new file and use @fast-csv/parse to parse it into usable, readable data
+    const historicalDataArray: {id: any, stateName: any, caseCount: any, caseRange: any, createdOn: any}[] = [];
     fs.createReadStream('./data/2022 U.S. Map & Case Count.csv')
         .pipe(parse())
         .on('error', error => console.error(error))
@@ -33,12 +35,40 @@ const scrapeStateData = async () => {
             // * row[0] = State name
             // * row[1] = State cases
             // * row[2] = State case range
-            row[0] === "State" ? '' : console.log(row);
-            // ? Push data to Supabase entries
+
+            if(row[0] !== "State") {
+                // * Exclude the descriptor row since thats not needed
+
+                // * Create historical data object to hold and push using createMany at end (to limit sql transactions)
+                const historicalDataObject = {
+                    id: uuid().toString(),
+                    stateName: row[0],
+                    caseCount: row[1],
+                    caseRange: row[2],
+                    createdOn: new Date()
+                };
+
+                historicalDataArray.push(historicalDataObject);
+                
+                await prisma.stateData.update({
+                    where: {
+                        state: row[0]
+                    },
+                    data: {
+                        caseCount: row[1],
+                        caseRange: row[2],
+                        createdOn: new Date(),
+                        updatedOn: new Date()
+                    }
+                }).then(res => console.log(res)).catch(e => console.log(e));
+            }
         })
-        .on('end', (rowCount: number) => {
+        .on('end', async (rowCount: number) => {
             fs.unlinkSync('./data/2022 U.S. Map & Case Count.csv');
             console.log(`Deleted the CSV file and parsed ${rowCount - 1} rows`)
+            await prisma.historicalStateData.createMany({
+                data: historicalDataArray, skipDuplicates: true
+            }).then(result => console.log(result)).catch(e => console.log(e))
         });
 
 	await browser.close();

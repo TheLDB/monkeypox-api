@@ -8,16 +8,16 @@ datasource db {
 }
 
 model historicalStateData {
-  id        String @id @db.VarChar
-  stateName String @db.VarChar
-  caseCount BigInt
-  caseRange String @db.VarChar
-  createdOn String @db.VarChar
+  id        String   @id @db.VarChar
+  stateName String   @db.VarChar
+  caseCount String   @db.VarChar
+  caseRange String   @db.VarChar
+  createdOn DateTime @db.Timestamptz(6)
 }
 
 model stateData {
   state     String   @id @db.VarChar
-  caseCount BigInt
+  caseCount String   @db.VarChar
   caseRange String   @db.VarChar
   createdOn DateTime @db.Timestamptz(6)
   updatedOn DateTime @db.Timestamptz(6)
